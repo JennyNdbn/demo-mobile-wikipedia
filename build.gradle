@@ -1,0 +1,97 @@
+plugins {
+    id 'java-library'
+    id "io.qameta.allure" version "2.11.2"
+    id "io.freefair.lombok" version "6.5.1"
+}
+
+repositories {
+    mavenCentral()
+}
+
+def assertJVersion = "3.24.2",
+    slf4jVersion = "2.0.9",
+    junitJupiterVersion = "5.10.0",
+    restAssuredVersion = "5.3.2",
+    jacksonDatabindVersion = "2.15.2",
+    allureVersion = "2.24.0"
+
+dependencies
+        {
+            testImplementation(
+                    "org.junit.jupiter:junit-jupiter:$junitJupiterVersion",
+                    "org.slf4j:slf4j-simple:$slf4jVersion",
+                    "io.rest-assured:rest-assured:$restAssuredVersion",
+                    "org.assertj:assertj-core:$assertJVersion",
+                    "com.fasterxml.jackson.core:jackson-databind:$jacksonDatabindVersion",
+                    "io.qameta.allure:allure-rest-assured:$allureVersion",
+                    "io.appium:java-client:8.5.1",
+                    "com.codeborne:selenide:6.18.0",
+                    "io.qameta.allure:allure-selenide:$allureVersion",
+                    "org.aeonbits.owner:owner:1.0.12",
+                    "org.projectlombok:lombok:1.18.30",
+                    "commons-io:commons-io:2.13.0"
+
+            )
+            testRuntimeOnly(
+                    "org.slf4j:slf4j-simple:$slf4jVersion"
+            )
+        }
+
+allure {
+    version.set(allureVersion)
+    adapter {
+        allureJavaVersion.set(allureVersion)
+        aspectjVersion.set("1.9.5")
+        aspectjWeaver.set(true)
+
+        frameworks {
+            junit5 {
+                // Defaults to allureJavaVersion
+                adapterVersion.set(allureVersion)
+                enabled.set(true)
+            }
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(Test) {
+    systemProperties(System.getProperties())
+    useJUnitPlatform()
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
+
+    if (System.getProperty("threads") != null) {
+        systemProperties += [
+                'junit.jupiter.execution.parallel.enabled'                 : true,
+                'junit.jupiter.execution.parallel.mode.default'            : 'concurrent',
+                'junit.jupiter.execution.parallel.mode.classes.default'    : 'concurrent',
+                'junit.jupiter.execution.parallel.config.strategy'         : 'fixed',
+                'junit.jupiter.execution.parallel.config.fixed.parallelism': System.getProperty("threads").toInteger()
+        ]
+    }
+}
+
+task positive_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("positive")
+    }
+}
+
+task negative_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("negative")
+    }
+}
