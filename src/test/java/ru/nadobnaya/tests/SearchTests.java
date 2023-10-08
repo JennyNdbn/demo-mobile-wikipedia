@@ -6,6 +6,8 @@ import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import ru.nadobnaya.pages.ArticlePage;
 import ru.nadobnaya.pages.SearchResultsPage;
 import ru.nadobnaya.pages.components.SearchComponent;
@@ -13,6 +15,7 @@ import ru.nadobnaya.pages.components.SearchComponent;
 import static ru.nadobnaya.tests.TestData.SOVCOMBANK;
 
 @Feature("Testing of searching on Wikipedia mobile app")
+@Execution(ExecutionMode.CONCURRENT)
 public class SearchTests extends TestBase {
     SearchComponent searchComponent = new SearchComponent();
     SearchResultsPage searchResultsPage = new SearchResultsPage();

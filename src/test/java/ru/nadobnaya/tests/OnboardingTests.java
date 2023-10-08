@@ -6,10 +6,13 @@ import io.qameta.allure.SeverityLevel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import static ru.nadobnaya.tests.TestData.*;
 
 @Feature("Testing of passing the onboarding screen on Wikipedia mobile app")
+@Execution(ExecutionMode.CONCURRENT)
 public class OnboardingTests extends TestBase {
 
     @Tag("positive")
