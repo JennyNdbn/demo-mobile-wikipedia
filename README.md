@@ -54,10 +54,10 @@ gradle allureServe
 ```
 #### Основная страница отчета
 <p align="center">
-<img title="Allure-report" src="images/screens/allure_report.PNG">
+<img title="Allure-report" src="images/screenshots/allure_report.PNG">
 </p>
 
 #### Тест-кейсы
 <p align="center">
-<img title="Allure-tests" src="images/screens/allure_report_suites.PNG">
+<img title="Allure-tests" src="images/screenshots/allure_report_suites.PNG">
 </p>
