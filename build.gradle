@@ -8,26 +8,24 @@ repositories {
     mavenCentral()
 }
 
-def assertJVersion = "3.24.2",
-    slf4jVersion = "2.0.9",
+def slf4jVersion = "2.0.9",
     junitJupiterVersion = "5.10.0",
     jacksonDatabindVersion = "2.15.2",
+    javaFakerVersion = "1.0.2",
     allureVersion = "2.24.0"
 
 dependencies
         {
             testImplementation(
                     "org.junit.jupiter:junit-jupiter:$junitJupiterVersion",
-                    "org.slf4j:slf4j-simple:$slf4jVersion",
-                    "org.assertj:assertj-core:$assertJVersion",
                     "com.fasterxml.jackson.core:jackson-databind:$jacksonDatabindVersion",
-                    "io.qameta.allure:allure-rest-assured:$allureVersion",
                     "io.appium:java-client:8.5.1",
                     "com.codeborne:selenide:6.18.0",
                     "io.qameta.allure:allure-selenide:$allureVersion",
                     "org.aeonbits.owner:owner:1.0.12",
                     "org.projectlombok:lombok:1.18.30",
-                    "commons-io:commons-io:2.13.0"
+                    "commons-io:commons-io:2.13.0",
+                    "com.github.javafaker:javafaker:$javaFakerVersion"
 
             )
             testRuntimeOnly(
